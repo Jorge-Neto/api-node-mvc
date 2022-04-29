@@ -6,12 +6,12 @@ let customers = [
 
 class CustomersController {
 
-    // Lista todos os Customers
+    // List All Customers
     index(req, res) {
         return res.json(customers);
     }
 
-    // Lista um Customer
+    // List a Customer
     show(req, res) {
         const customerId = parseInt(req.params.id);
 
@@ -21,7 +21,7 @@ class CustomersController {
         return res.status(status).json(customer);
     }
 
-    // Cria um Customer
+    // Create a Customer
     create(req, res) {
         const { name, language } = req.body;
         const id = customers[customers.length - 1].id + 1;
@@ -32,7 +32,7 @@ class CustomersController {
         return res.status(201).json(newCustomer);
     }
 
-    // Atualiza um Customer
+    // Update a Customer
     update(req, res) {
         const id = parseInt(req.params.id);
         const { name, language } = req.body;
@@ -47,7 +47,7 @@ class CustomersController {
         return res.status(status).json(customers[index]);
     }
 
-    // Exclui um Customer
+    // Destroy a Customer
     destroy(req, res) {
         const id = parseInt(req.params.id);
 
@@ -63,4 +63,4 @@ class CustomersController {
 
 }
 
-module.exports = new CustomersController();
+export default new CustomersController();
