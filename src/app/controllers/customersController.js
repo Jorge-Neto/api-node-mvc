@@ -1,3 +1,5 @@
+import Customer from "../models/Customer";
+
 const customers = [
   { id: 1, name: "Jorge", language: "JavaScript" },
   { id: 2, name: "Oliveira", language: "Java" },
@@ -6,8 +8,11 @@ const customers = [
 
 class CustomersController {
   // List All Customers
-  index(req, res) {
-    return res.json(customers);
+  async index(req, res) {
+    const data = await Customer.findAll({
+      limit: 1000,
+    });
+    return res.json(data);
   }
 
   // List a Customer

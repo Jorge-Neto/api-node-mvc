@@ -11,6 +11,8 @@ const models = [Customer, Contact, User];
 class Database {
   constructor() {
     this.connection = new Sequelize(config);
+
+    this.init();
   }
 
   init() {

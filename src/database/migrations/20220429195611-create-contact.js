@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("contact", {
+    await queryInterface.createTable("contacts", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -15,10 +15,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-      },
-      status: {
-        type: Sequelize.ENUM("ACTIVE", "ARCHIVED"),
-        defaultValue: "ACTIVE",
       },
       created_at: {
         type: Sequelize.DATE,
@@ -39,6 +35,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("contact");
+    await queryInterface.dropTable("contacts");
   },
 };
