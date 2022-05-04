@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import { parseISO } from "date-fns";
 
 import Customer from "../models/Customer";
+import Contact from "../models/Contact";
 
 const customers = [
   { id: 1, name: "Jorge", language: "JavaScript" },
@@ -95,6 +96,12 @@ class CustomersController {
 
     const data = await Customer.findAll({
       where,
+      include: [
+        {
+          model: Contact,
+          attributes: ["id"],
+        },
+      ],
       order,
       limit,
       offset: limit * page - limit,
