@@ -1,6 +1,7 @@
 import express from "express";
 import routes from "./routes";
 
+import authMiddleware from "./app/middlewares/auth";
 import "./database";
 
 class App {
@@ -12,6 +13,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(authMiddleware);
   }
 
   routes() {
