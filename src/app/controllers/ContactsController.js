@@ -184,7 +184,7 @@ class ContactsController {
       return res.status(404).json();
     }
 
-    await contact.destroy(req.body);
+    await contact.destroy();
 
     return res.status(200).json();
   }

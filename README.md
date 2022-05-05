@@ -11,3 +11,4 @@ Tecnologias utilizadas:
 	- Sequelize
 	- Prettier
 	- EsLint
+  - Yup
