@@ -1,4 +1,4 @@
-import Sequelize, { Model } from "sequelize";
+import Sequelize, { Model, Op } from "sequelize";
 
 class Customer extends Model {
   static init(sequelize) {
@@ -10,6 +10,10 @@ class Customer extends Model {
       },
       {
         sequelize,
+        name: {
+          singular: "customer",
+          plural: "customers",
+        },
       }
     );
   }

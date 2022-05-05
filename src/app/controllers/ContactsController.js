@@ -5,7 +5,7 @@ import { parseISO } from "date-fns";
 import Customer from "../models/Customer";
 import Contact from "../models/Contact";
 
-class CustomersController {
+class ContactsController {
   // List All Customers
   async index(req, res) {
     const {
@@ -22,7 +22,7 @@ class CustomersController {
     const page = req.query.page || 1;
     const limit = req.query.limit || 25;
 
-    let where = {};
+    let where = { customer_id: req.params.customerId };
     let order = [];
 
     if (name) {
@@ -33,7 +33,6 @@ class CustomersController {
         },
       };
     }
-
     if (email) {
       where = {
         ...where,
@@ -42,7 +41,6 @@ class CustomersController {
         },
       };
     }
-
     if (status) {
       where = {
         ...where,
@@ -51,7 +49,6 @@ class CustomersController {
         },
       };
     }
-
     if (createdBefore) {
       where = {
         ...where,
@@ -84,55 +81,63 @@ class CustomersController {
         },
       };
     }
-
     if (sort) {
       order = sort.split(",").map((item) => item.split(":"));
     }
 
-    const data = await Customer.findAll({
+    const data = await Contact.findAll({
       where,
       include: [
         {
-          model: Contact,
+          model: Customer,
           attributes: ["id", "status"],
+          required: true,
         },
       ],
       order,
       limit,
       offset: limit * page - limit,
     });
+
     return res.json(data);
   }
 
   // List a Customer
   async show(req, res) {
-    const customerId = parseInt(req.params.id, 10);
+    const contact = await Contact.findOne({
+      where: {
+        customer_id: req.params.customerId,
+        id: req.params.id,
+      },
+      attributes: {
+        exclude: ["customer_id", "customerId"],
+      },
+    });
 
-    const customer = await Customer.findByPk(customerId);
-
-    if (!customer) {
+    if (!contact) {
       return res.status(404).json();
     }
 
-    return res.status(200).json(customer);
+    return res.status(200).json(contact);
   }
 
   // Create a Customer
   async create(req, res) {
-    const newCustomer = req.body;
-
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
       status: Yup.string().uppercase(),
     });
 
-    if (!(await schema.isValid(newCustomer))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: "Error on validate schema." });
     }
 
-    const customer = await Customer.create(newCustomer);
-    return res.status(201).json(customer);
+    const contact = await Contact.create({
+      customer_id: req.params.customerId,
+      ...req.body,
+    });
+    return res.status(201).json(contact);
   }
 
   // Update a Customer
@@ -147,29 +152,42 @@ class CustomersController {
       return res.status(400).json({ error: "Error on validate schema." });
     }
 
-    const customer = await Customer.findByPk(req.params.id);
+    const contact = await Contact.findOne({
+      where: {
+        customer_id: req.params.customerId,
+        id: req.params.id,
+      },
+      attributes: {
+        exclude: ["customer_id", "customerId"],
+      },
+    });
 
-    if (!customer) {
+    if (!contact) {
       return res.status(404).json();
     }
 
-    await customer.update(req.body);
+    await contact.update(req.body);
 
-    return res.status(200).json(customer);
+    return res.status(200).json(contact);
   }
 
   // Destroy a Customer
   async destroy(req, res) {
-    const customer = await Customer.findByPk(req.params.id);
+    const contact = await Contact.findOne({
+      where: {
+        customer_id: req.params.customerId,
+        id: req.params.id,
+      },
+    });
 
-    if (!customer) {
+    if (!contact) {
       return res.status(404).json();
     }
 
-    await customer.destroy(req.body);
+    await contact.destroy(req.body);
 
     return res.status(200).json();
   }
 }
 
-export default new CustomersController();
+export default new ContactsController();
