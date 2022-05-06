@@ -30,7 +30,6 @@ class UsersController {
         },
       };
     }
-
     if (email) {
       where = {
         ...where,
@@ -39,7 +38,6 @@ class UsersController {
         },
       };
     }
-
     if (createdBefore) {
       where = {
         ...where,
@@ -72,7 +70,6 @@ class UsersController {
         },
       };
     }
-
     if (sort) {
       order = sort.split(",").map((item) => item.split(":"));
     }
