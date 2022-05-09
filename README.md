@@ -17,3 +17,9 @@ Tecnologias utilizadas:
   - Nodemailer
     - Mailtrap
   - Bee-Queue
+
+-PostrgeSQL
+-Redis
+  - Comandos para iniciar e encerrar o Redis:
+    - sudo service redis-server start
+    - sudo service redis-server stop

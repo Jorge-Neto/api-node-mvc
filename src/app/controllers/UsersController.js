@@ -5,6 +5,9 @@ import { parseISO } from "date-fns";
 import User from "../models/User";
 import Mail from "../../lib/Mail";
 
+import Queue from "../../lib/Queue";
+import DummyJob from "../jobs/DummyJob";
+
 class UsersController {
   async index(req, res) {
     const {
@@ -127,6 +130,7 @@ class UsersController {
       text: `Hi ${name}, welcome to our system.`,
     });
 
+    await Queue.add(DummyJob.key, { message: "Hi!" });
     return res
       .status(201)
       .json({ id, name, email, file_id, createdAt, updatedAt });
