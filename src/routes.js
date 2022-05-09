@@ -1,13 +1,17 @@
 import { Router } from "express";
-
-import sessions from "./app/controllers/SessionsController";
-import customers from "./app/controllers/CustomersController";
-import contacts from "./app/controllers/ContactsController";
-import users from "./app/controllers/UsersController";
+import multer from "multer";
+import multerConfig from "./config/multer";
 
 import auth from "./app/middlewares/auth";
 
+import files from "./app/controllers/FilesController";
+import sessions from "./app/controllers/SessionsController";
+import users from "./app/controllers/UsersController";
+import customers from "./app/controllers/CustomersController";
+import contacts from "./app/controllers/ContactsController";
+
 const routes = new Router();
+const upload = multer(multerConfig);
 
 // Sessions
 routes.post("/sessions", sessions.create);
@@ -35,5 +39,7 @@ routes.get("/users", users.index);
 routes.get("/users/:id", users.show);
 routes.put("/users/:id", users.update);
 routes.delete("/users/:id", users.destroy);
+
+routes.post("/file", upload.single("file"), files.create);
 
 export default routes;

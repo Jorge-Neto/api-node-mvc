@@ -12,3 +12,8 @@ Tecnologias utilizadas:
 	- Prettier
 	- EsLint
   - Yup
+  - JWT
+  - Bcrypt
+  - Nodemailer
+    - Mailtrap
+  - Bee-Queue

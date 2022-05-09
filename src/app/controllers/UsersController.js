@@ -3,6 +3,7 @@ import { Op } from "sequelize";
 import { parseISO } from "date-fns";
 
 import User from "../models/User";
+import Mail from "../../lib/Mail";
 
 class UsersController {
   async index(req, res) {
@@ -96,9 +97,11 @@ class UsersController {
       return res.status(404).json();
     }
 
-    const { id, name, email, createdAt, updatedAt } = user;
+    const { id, name, email, file_id, createdAt, updatedAt } = user;
 
-    return res.status(200).json({ id, name, email, createdAt, updatedAt });
+    return res
+      .status(200)
+      .json({ id, name, email, file_id, createdAt, updatedAt });
   }
 
   async create(req, res) {
@@ -115,10 +118,18 @@ class UsersController {
       return res.status(400).json({ error: "Error on validate schema." });
     }
 
-    const { id, name, email, createdAt, updatedAt } = await User.create(
-      req.body
-    );
-    return res.status(201).json({ id, name, email, createdAt, updatedAt });
+    const { id, name, email, file_id, createdAt, updatedAt } =
+      await User.create(req.body);
+
+    Mail.send({
+      to: email,
+      subject: "Welcome!",
+      text: `Hi ${name}, welcome to our system.`,
+    });
+
+    return res
+      .status(201)
+      .json({ id, name, email, file_id, createdAt, updatedAt });
   }
 
   async update(req, res) {
@@ -151,11 +162,12 @@ class UsersController {
       return res.status(401).json({ error: "User password not match." });
     }
 
-    const { id, name, email, createdAt, updatedAt } = await user.update(
-      req.body
-    );
+    const { id, name, email, file_id, createdAt, updatedAt } =
+      await user.update(req.body);
 
-    return res.status(200).json({ id, name, email, createdAt, updatedAt });
+    return res
+      .status(200)
+      .json({ id, name, email, file_id, createdAt, updatedAt });
   }
 
   async destroy(req, res) {
