@@ -5,21 +5,9 @@ Este é um repositório criado para aplicar conhecimentos adquiridos sobre Node 
 
 Tecnologias utilizadas:
 - NodeJs
-	- Express
-	- Nodemon
-	- Sucrase
-	- Sequelize
-	- Prettier
-	- EsLint
-  - Yup
-  - JWT
-  - Bcrypt
-  - Nodemailer
-    - Mailtrap
-  - Bee-Queue
-
--PostrgeSQL
--Redis
+- Mailtrap
+- PostrgeSQL
+- Redis
   - Comandos para iniciar e encerrar o Redis:
     - sudo service redis-server start
     - sudo service redis-server stop
