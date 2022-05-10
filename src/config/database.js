@@ -1,9 +1,12 @@
+// eslint-disable-next-line import/no-import-module-exports
+import "dotenv/config";
+
 module.exports = {
   dialect: "postgres",
-  host: "localhost",
-  username: "postgres",
-  password: "postgres",
-  database: "local",
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
   define: {
     timestamp: true,
     underscored: true,

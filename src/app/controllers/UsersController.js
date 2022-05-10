@@ -3,10 +3,10 @@ import { Op } from "sequelize";
 import { parseISO } from "date-fns";
 
 import User from "../models/User";
-import Mail from "../../lib/Mail";
 
 import Queue from "../../lib/Queue";
-import DummyJob from "../jobs/DummyJob";
+// import DummyJob from "../jobs/DummyJob";
+import WelcomeEmailJob from "../jobs/WelcomeEmailJob";
 
 class UsersController {
   async index(req, res) {
@@ -124,13 +124,9 @@ class UsersController {
     const { id, name, email, file_id, createdAt, updatedAt } =
       await User.create(req.body);
 
-    Mail.send({
-      to: email,
-      subject: "Welcome!",
-      text: `Hi ${name}, welcome to our system.`,
-    });
+    // await Queue.add(DummyJob.key, { message: "Hi!" });
+    await Queue.add(WelcomeEmailJob.key, { name, email });
 
-    await Queue.add(DummyJob.key, { message: "Hi!" });
     return res
       .status(201)
       .json({ id, name, email, file_id, createdAt, updatedAt });

@@ -7,6 +7,6 @@ export default {
     pass: "7fb06ae649b071",
   },
   default: {
-    from: "Sistema <noreply@example.com>",
+    from: "System <noreply@example.com>",
   },
 };
