@@ -1,9 +1,9 @@
 # API com NodeJs com MVC
 
-Este é um repositório criado para aplicar conhecimentos adquiridos sobre Node Js
+This is a repository created to apply and store acquired knowledge about NodeJs
 
 
-Tecnologias utilizadas:
+Technologies used:
 - NodeJs
 - Mailtrap
 - PostrgeSQL
