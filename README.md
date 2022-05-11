@@ -8,6 +8,6 @@ Technologies used:
 - Mailtrap
 - PostrgeSQL
 - Redis
-  - Comandos para iniciar e encerrar o Redis:
+  - Commands to start and stop Redis:
     - sudo service redis-server start
     - sudo service redis-server stop
